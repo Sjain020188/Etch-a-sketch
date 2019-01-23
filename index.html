@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <style>
+            .container
+            {
+                border: 5px solid red;
+                width: 500px;
+                height:500px;
+               position:absolute;
+               margin:auto;
+               left:0;
+               right:0;
+            }
+
+           
+
+           
+            li
+           {
+                list-style:none;
+                display: inline;
+                margin:10px;
+           }
+           h1{
+               text-align: center;
+           }
+        </style>
+    </head>
+    <body>
+        <h1>Etch-a-Sketch
+                <div class = "header">
+                        <ul id="gamebuttons">
+                            <li> <button id="btn1" value="Random Color">Random Color</button> </li>
+                            <li> <button id="btn2" value="Change Grid Size">Change Grid Size</button> </li>
+                            <li> <button id="btn3" value="Darken">Darken</button> </li>
+                            <li> <button id="btn4" value="default">Default Style</button> </li>
+                        </ul>
+                </div>
+        </h1>
+        
+        <div class="container">
+
+        </div>
+       
+    </body>
+    <script>
+        let i=0;
+        let container = document.querySelector('.container');
+        let num = 16;
+        let backColor = 'black';
+        const gridSizeBtn = document.querySelector('#btn2');
+        const colorBtn = document.querySelector('#btn1');
+        const defaultBtn = document.querySelector('#btn4');
+        const darkenBtn = document.querySelector('#btn3');
+
+
+        gridSizeBtn.addEventListener('click',(e)=>{
+            console.log("Size button event");
+            num=window.prompt("Enter desired of grid");
+            if(isNaN(num) || num==null || num== "" || num.trim() == "")
+            {
+                alert("You didn't enter a number. Please enter number")
+            }
+            else
+            {
+                while(container.hasChildNodes())
+                container.removeChild(container.firstChild);
+                createBox(num);
+            }
+        });
+
+        colorBtn.addEventListener('click',(e)=>{
+            console.log("Color button event");
+            changeRandomColor();
+        });
+
+        defaultBtn.addEventListener('click',(e)=>{
+            console.log("Default button event");
+            num=16;
+            while(container.hasChildNodes())
+               container.removeChild(container.firstChild);
+            createBox(num);
+            changeColor(backColor);
+        });
+
+        darkenBtn.addEventListener('click',(e)=>{
+            console.log("Darken button event");
+            darken();
+        });
+
+
+
+        function createBox(num)
+        {
+            console.log("Grid Size"+num);
+            for(i=0;i<num*num;i++)
+            {
+                const div = document.createElement('div');
+                const height = 500/num;
+           
+                div.style.height = `${height}px`;
+                div.style.width = `${height}px`;
+                div.style.display = 'inline-block';
+                container.appendChild(div);   
+             }
+        }
+
+        function changeColor(color)
+        {
+            container.addEventListener('mouseover',(e) =>
+            {
+                console.log(color);
+                 e.target.style.background=color;
+            });
+        }
+
+        function changeRandomColor()
+        {
+            console.log("change color randomly");
+            container.addEventListener('mouseover',(e) =>
+            {
+                let randomColor = Math.floor(Math.random()*16777215).toString(16);
+                e.target.style.background=`#${randomColor}`;
+
+            });
+        }
+
+        function darken()
+        {
+            container.addEventListener('mouseover',(e) =>
+            {
+               console.log(e.target.style.opacity);
+               e.target.style.opacity = (parseFloat(e.target.style.opacity) || 0) + 0.1;
+
+            });
+        }
+
+
+        createBox(num);
+        changeColor(backColor);
+       
+    </script>
+</html>
