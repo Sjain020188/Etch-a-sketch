@@ -66,6 +66,10 @@
                 while(container.hasChildNodes())
                 container.removeChild(container.firstChild);
                 createBox(num);
+				if(backColor=='black')
+					changeColor('black');
+				else
+					changeRandomColor();
             }
         });
 
@@ -78,9 +82,9 @@
             console.log("Default button event");
             num=16;
             while(container.hasChildNodes())
-               container.removeChild(container.firstChild);
+            container.removeChild(container.firstChild);
             createBox(num);
-            changeColor(backColor);
+            changeColor('black');
         });
 
         darkenBtn.addEventListener('click',(e)=>{
@@ -107,32 +111,36 @@
 
         function changeColor(color)
         {
-            container.addEventListener('mouseover',(e) =>
+		    backColor = 'black';
+		    let divs = document.querySelectorAll('.container div');
+			divs.forEach(div => div.addEventListener('mouseover',(e) =>
             {
-                console.log(color);
-                 e.target.style.background=color;
-            });
+                console.log(e.currentTarget);
+                 e.currentTarget.style.background=color;
+            }));
         }
 
         function changeRandomColor()
         {
-            console.log("change color randomly");
-            container.addEventListener('mouseover',(e) =>
+		    backColor = 'blue';
+			let divs = document.querySelectorAll('.container div');
+			divs.forEach(div => div.addEventListener('mouseover',(e) =>
             {
-                let randomColor = Math.floor(Math.random()*16777215).toString(16);
-                e.target.style.background=`#${randomColor}`;
+                 let randomColor = Math.floor(Math.random()*16777215).toString(16);
+                e.currentTarget.style.background=`#${randomColor}`;
 
-            });
+            }));
         }
 
         function darken()
         {
-            container.addEventListener('mouseover',(e) =>
+			let divs = document.querySelectorAll('.container div');
+			divs.forEach(div => div.addEventListener('mouseover',(e) =>
             {
-               console.log(e.target.style.opacity);
-               e.target.style.opacity = (parseFloat(e.target.style.opacity) || 0) + 0.1;
+                 e.currentTarget.style.opacity = (parseFloat(e.target.style.opacity) || 0) + 0.1;
 
-            });
+            }));
+			
         }
 
 
